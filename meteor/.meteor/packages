@@ -24,3 +24,5 @@ quave:collections
 quave:accounts-passwordless-react
 quave:logged-user-react
 quave:alert-react-tailwind
+service-configuration
+accounts-google

@@ -5,6 +5,19 @@ import { useAlert } from 'meteor/quave:alert-react-tailwind';
 
 import { RoutePaths } from '../general/RoutePaths';
 
+const GoogleLogin = () => {
+  const login = () => {
+    Meteor.loginWithGoogle({
+        requestPermissions: ['email', 'https://www.googleapis.com/auth/youtube'],
+    });
+  };
+  return (
+    <div>
+      <button onClick={login}>Login with Google</button>
+    </div>
+  );
+};
+
 export const Access = () => {
   const { openAlert } = useAlert();
   const navigate = useNavigate();
@@ -19,6 +32,7 @@ export const Access = () => {
       <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl">
         <span className="block">Access</span>
       </h2>
+      <GoogleLogin />
       <Passwordless onEnterToken={onEnterToken} />
       <a
         onClick={() => navigate(RoutePaths.HOME)}
