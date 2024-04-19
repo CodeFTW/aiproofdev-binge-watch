@@ -3,6 +3,8 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '../app/youtube/youtubeSetup';
 
+import '../app/youtube/youtubeMethods';
+
 import '../app/clicks/clicksMethods';
 import '../app/clicks/clicksPublishes';
 
