@@ -1,5 +1,6 @@
 {
   "public": {
+    "appUrl": "http://localhost:3000",
     "appInfo": {
       "name": "Meteor Template by quave"
     }

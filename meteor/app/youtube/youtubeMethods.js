@@ -7,9 +7,9 @@ async function getGoogleAPI({ userId }) {
   const user = await Meteor.users.findOneAsync(userId);
 
   const oauth2Client = new OAuth2(
-    Meteor.settings.google.clientId, // Replace with your own Client ID
-    Meteor.settings.google.secret, // Replace with your own Client Secret
-    'http://locahost:3000' // Replace with your own Redirect URL
+    Meteor.settings.google.clientId,
+    Meteor.settings.google.secret,
+    Meteor.settings.public.appUrl
   );
   const accessToken = user.services.google.accessToken;
   oauth2Client.setCredentials({
@@ -26,7 +26,6 @@ const getLikeStatus = async ({ googleAPI, videoId }) => {
       id: videoId,
       // onBehalfOfContentOwner: userId // Replace with user's ID
     });
-    console.log(`videoLikes.data.itemsx`, videoLikes.data.items);
     const rating = videoLikes.data.items[0].rating;
 
     if (rating === 'none') {
@@ -62,7 +61,7 @@ const listVideosFromChannel = async function ({ channelId }) {
         thumbnails,
       })
     );
-  return Promise.allSettled(
+  const videosToReturn = await Promise.allSettled(
     videos.map(async (video) => {
       video.likeStatus = await getLikeStatus({
         googleAPI,
@@ -71,6 +70,7 @@ const listVideosFromChannel = async function ({ channelId }) {
       return video;
     })
   );
+  return videosToReturn.map((video) => video.value);
 };
 Meteor.methods({
   'youtube.listVideosFromChannel': listVideosFromChannel,
